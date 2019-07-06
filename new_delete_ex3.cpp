@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 /*
 Create class called binary_tree
 Create structure called node
@@ -42,24 +45,35 @@ class binary_tree {
         void add();
         void search();
         void add(int value, node * node) {
+            cout << "in add(value, node) " << value << "\t" << node << "\n";
             if( value > node->data)
             {
-                if ( node->right == nullptr )
+                cout << "adding right\n";
+                cout << "node->right is " << node->right <<"\n";
+                if ( node->right == nullptr ) {
+                    cout << "just setting right node to a new node\n";
                     node->right=new binary_tree::node(value,nullptr,nullptr);
-                else
+                }
+                else {
+                    cout << "calling add again\n";
                     add(value,node->right);    
+                }
             }
             else
             {
+                cout << "adding left\n";
                 if ( node->left == nullptr )
                     node->left=new binary_tree::node(value,nullptr,nullptr);
                 else
                     add(value,node->left);   
-            }   
+            }
+            cout << "out add(value, node) " << "value" << "\t" << node << "\n";
         }
         void add(int value)
         {
+            cout << "in add(value) "  << value << "\n";
             add(value,root);
+            cout << "out add(value)\n";
         }
         bool search(int value,node * node)
         {
@@ -83,8 +97,27 @@ class binary_tree {
         {
             return search(value,root);
         }
+
+        binary_tree(int value) {
+            node * root = new node(value,nullptr,nullptr); 
+        }
+        ~binary_tree() {
+            delete binary_tree::root;
+        }
+        
 };
 
 int main() {
-
+    cout << "Starting!\n"; 
+    cout << "Initializing  bt to 5\n";
+    binary_tree bt(5);
+    cout << "Initialized bt\n";
+    bt.add(3);
+    cout << "added 3\n";
+    bt.add(5);
+    cout << bt.search(3) << "\n";
+    cout << bt.search(4) << "\n"; 
+    bt.add(4);
+    cout << bt.search(4) << "\n"; 
+    cout << "Finished\n";
 }
