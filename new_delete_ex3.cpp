@@ -28,9 +28,6 @@ Structure destructor deletes left and right pointers
 Class destructor deletes root pointer
 Test everything in main
  */
-
-class binary_tree {
-    public:
         struct node {
             int data;
             node * left;
@@ -41,6 +38,10 @@ class binary_tree {
                 if( right ) { delete right; }
             } 
         };
+
+class binary_tree {
+    public:
+
         node *root;
         void add();
         void search();
@@ -50,9 +51,10 @@ class binary_tree {
             {
                 cout << "adding right\n";
                 cout << "node->right is " << node->right <<"\n";
+                //cout << "node->right is " << node->right->data << "\t" << node->right <<"\n";
                 if ( node->right == nullptr ) {
                     cout << "just setting right node to a new node\n";
-                    node->right=new binary_tree::node(value,nullptr,nullptr);
+                    node->right=new struct node(value,nullptr,nullptr);
                 }
                 else {
                     cout << "calling add again\n";
@@ -63,7 +65,7 @@ class binary_tree {
             {
                 cout << "adding left\n";
                 if ( node->left == nullptr )
-                    node->left=new binary_tree::node(value,nullptr,nullptr);
+                    node->left=new struct  node(value,nullptr,nullptr);
                 else
                     add(value,node->left);   
             }
@@ -99,9 +101,11 @@ class binary_tree {
         }
 
         binary_tree(int value) {
-            node * root = new node(value,nullptr,nullptr); 
+            cout << "In binary_tree(value)\n";
+            root = new node(value,nullptr,nullptr); 
         }
         ~binary_tree() {
+            cout << "In ~binary_tree()\n";
             delete binary_tree::root;
         }
         
@@ -112,6 +116,7 @@ int main() {
     cout << "Initializing  bt to 5\n";
     binary_tree bt(5);
     cout << "Initialized bt\n";
+    cout << "bt right is " << bt.root->right << "\n";
     bt.add(3);
     cout << "added 3\n";
     bt.add(5);
